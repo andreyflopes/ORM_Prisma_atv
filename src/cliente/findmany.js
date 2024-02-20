@@ -6,8 +6,8 @@ const prisma = new PrismaClient();
 
 async function main() {
   const clientes = await prisma.cliente.findMany();
-  console.log(clientes);
+  console.log(clientes)
 }
 
 
-main();
+main(); 
