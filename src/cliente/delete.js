@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 async function main() {
   const result = await prisma.cliente.delete({
     where: {
-      id: "453b0949-0cba-4530-8ade-e78cd97ae5a9",
+      id: '48058f26-cbee-416d-a6e9-b5d86f106612',
     },
   });
 

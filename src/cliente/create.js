@@ -10,7 +10,7 @@ async function main() {
       name: "Andrey",
       fullname: "Andrey Freitas Lopes",
       cpf: "123.123.123-54",
-      address:"Maria julia da Luz, 1294" ,
+      address:"Maria julia da Luz, 1294",
     },
   });
 
