@@ -63,31 +63,46 @@ app.delete('/cliente/:id', async (req, res) => {
   }
 });
 
+
 app.put('/cliente/:id', async (req, res) => {
   const { id } = req.params;
-  const { data } = req.body; 
+  const data = req.body; 
 console.log(data)
   try {
+    // Verifica se o cliente com o ID fornecido existe
+    const clienteExistente = await prisma.cliente.findUnique({
+      where: {
+        id: id
+      }
+    });
+
+    if (!clienteExistente) {
+      return res.status(404).json({ error: 'Cliente não encontrado' });
+    }
+
+    // Atualiza o cliente com os novos dados
     const updatedCliente = await prisma.cliente.update({
       where: {
         id: id
       },
       data: {
-        name: data.name||undefined,
-        fullname: data.fullname||undefined,
-        cpf: data.cpf||undefined,
-        address: data.address||undefined 
-      }
+        name: data.name || clienteExistente.name,
+        fullname: data.fullname || clienteExistente.fullname,
+        cpf: data.cpf || clienteExistente.cpf,
+        address: data.address || clienteExistente.address 
+      }    
     }); 
-
-    // Retorna uma resposta JSON com o cliente atualizado e status HTTP 200 (OK)
+     
+    // Retorna o cliente atualizado
     res.status(200).json(updatedCliente);
   } catch (error) {
-    // Se ocorrer um erro durante a atualização do cliente, vai retornar    
-    console.error('Erro ao atualizar cliente:', error);
-    res.status(500).json({ success: false, message: 'Erro ao atualizar cliente' });
+    console.error(error);
+    res.status(500).json({ error: 'Erro ao atualizar cliente' });
   }
 });
+
+
+
 
 
 
